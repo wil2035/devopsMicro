@@ -12,10 +12,10 @@ pipeline {
         }
 
         stage('Deployment') {
-             environment {
+            /*environment {
                 TAG = constants.ENVIRONMENTS.dev.tag
                 DOCKER_REGISTRY = constants.ENVIRONMENTS.dev.docker_registry
-            }
+            }*/
             steps {
                 sh 'docker build -t devops-microservice .'
                 sh 'docker run -d -p 80:5000 devops-microservice'
