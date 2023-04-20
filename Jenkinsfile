@@ -12,13 +12,14 @@ pipeline {
     }
 
     stages {
-        stage('Testing') {
+        stage('Testing static code') {
             steps {
                 sh 'pip install pylint'
                 sh 'pylint devops.py'
             }
         }
 
+        
         stage('Deployment') {
             /*environment {
                 TAG = constants.ENVIRONMENTS.dev.tag
@@ -31,5 +32,13 @@ pipeline {
                 sh 'docker push my-microservice:${TAG}'
             }
         }
+
+        stage('Automatic Test'){
+            steps{
+                sh 'pip install pytest requests'
+                sh 'pytest auto_test_devops.py'
+            }
+        }
+
     }
 }
