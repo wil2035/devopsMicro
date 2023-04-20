@@ -6,7 +6,8 @@ pipeline {
         scriptSecurity {
             sandbox {
                 // Disable Groovy Sandbox
-                permissions = [new org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript()]
+                permissions([new org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript()])
+
             }
         }
     }
