@@ -2,15 +2,15 @@ def constants = load 'constants.groovy'
 
 pipeline {
     agent any
-    options {
-        scriptSecurity {
-            sandbox {
-                // Disable Groovy Sandbox
-                permissions([new org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript()])
+    // options {
+    //     scriptSecurity {
+    //         sandbox {
+    //             // Disable Groovy Sandbox
+    //             permissions([new org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript()])
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
     stages {
         stage('Testing static code') {
