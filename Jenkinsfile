@@ -2,16 +2,7 @@ def constants = load 'constants.groovy'
 
 pipeline {
     agent any
-    // options {
-    //     scriptSecurity {
-    //         sandbox {
-    //             // Disable Groovy Sandbox
-    //             permissions([new org.jenkinsci.plugins.scriptsecurity.sandbox.groovy.SecureGroovyScript()])
-
-    //         }
-    //     }
-    // }
-
+    
     stages {
         stage('Testing static code') {
             steps {
@@ -19,18 +10,20 @@ pipeline {
                 sh 'pylint devops.py'
             }
         }
-
         
         stage('Deployment') {
-            /*environment {
+            environment {
                 TAG = constants.ENVIRONMENTS.dev.tag
-                DOCKER_REGISTRY = constants.ENVIRONMENTS.dev.docker_registry
-            }*/
+                ECR_REPOSITORY = constants.ENVIRONMENTS.dev.repository
+                ECR_REGISTRY = constants.ENVIRONMENTS.dev.docker_registry
+            }
             steps {
-                sh 'docker build -t devops-microservice .'
-                sh 'docker run -d -p 80:5000 devops-microservice'
-                sh 'docker tag devops-microservice:latest devops-microservice:${TAG}'
-                sh 'docker push my-microservice:${TAG}'
+                withAWS(credentials: 'jenkins_aws_user') {
+                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ECR_REPOSITORY}'
+                    sh 'docker build -t devops-microservice .'
+                    sh 'docker tag devops-microservice:latest ${ECR_REPOSITORY}/${ECR_REPOSITORY}:${TAG}'
+                    sh 'docker push ${ECR_REPOSITORY}/${ECR_REPOSITORY}:${TAG}'
+                }
             }
         }
 

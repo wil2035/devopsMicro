@@ -1,12 +1,13 @@
 def ENVIRONMENTS = [
     'dev': [
         'host': 'localhost',
-        'docker_registry': 'dev-registry.example.com',
-        'tag': 'dev'
+        'docker_registry': '212783366536.dkr.ecr.us-east-1.amazonaws.com',
+        'repository' : 'microservice'
+        'tag': 'dev',
+
     ],
     'prod': [
-        'host': 'prod',
         'docker_registry': 'prod-registry.example.com',
-        'tag': 'dev'
+        'tag': 'prod'
     ]
 ]
