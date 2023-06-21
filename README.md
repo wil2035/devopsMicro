@@ -26,6 +26,11 @@ $ cd devops-microservice
 ```shell
 $ pip install -r requirements.txt
 ```
+* Build and run docker
+```shell
+$ docker build -t mycropython:v1 .
+$ docker run --name micropy -d -p 8080:5000 micropython:v1
+
 
 ## API Key and JWT
 This microservice requires an API key and JWT for authorization. You can set the API key and JWT in the constants.py file.
@@ -45,7 +50,7 @@ In addition, the following headers are required:
 
 ```
 curl -X POST \
-  http://localhost/Devops \
+  http://localhost:8080/Devops \
   -H 'Content-Type: application/json' \
   -H 'X-Parse-REST-API-Key: 2f5ae96c-b558-4c7b-a590-a501ae1c3f6c' \
   -H "X-JWT-KWY: jwt-token" \
